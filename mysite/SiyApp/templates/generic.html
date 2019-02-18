@@ -1,0 +1,91 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<!--
+	Road Trip by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Generic - ProOnePal by RealNinjas</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header" class="alt">
+				<div class="logo"><a href="index">ProOnePal <span>by RealNinjas</span></a></div>
+				<a href="#menu"><span>Menu</span></a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="generic">Generic</a></li>
+					<li><a href="elements.html">Elements</a></li>
+				</ul>
+			</nav>
+
+		<!-- Content -->
+		<!--
+			Note: To show a background image, set the "data-bg" attribute below
+			to the full filename of your image. This is used in each section to set
+			the background image.
+		-->
+			<section id="post" class="wrapper bg-img" data-bg="banner2.jpg">
+				<div class="inner">
+					<article class="box">
+						<header>
+							<h2 style="font-family:'Segoe Print'">Teams in league</h2>
+							<p>01.01.2019</p>
+						</header>
+						<div class="content">
+								
+						</div>
+						<footer>
+							
+						</footer>
+					</article>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">						
+						<div class="container">
+							{% for team in data %}
+								{% if team.name != '"name"' %}
+									<p class="col-md-4 label-primary"
+									style="border-radius:80px">{{team.name}}  -	{{team.kasi}}</p>
+								{% endif %}
+							{% endfor %}
+							</div>
+						</div>
+					<ul class="icons">
+						<li><a href="#" class="icon round fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon round fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon round fa-instagram"><span class="label">Instagram</span></a></li>
+					</ul>
+
+					<div class="copyright">
+						&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+					</div>
+
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'assets/js/skel.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+			<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+
+	</body>
+</html>
