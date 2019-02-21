@@ -19,6 +19,7 @@ class Team(models.Model):
 class Player(models.Model):
     Team     = models.ForeignKey(Team, on_delete=models.CASCADE,null=True,default=2040)
     name     = models.CharField(max_length=128,unique=True)
+    position = models.CharField(max_length=128,default="GK")
     imgPath  = models.CharField(max_length=128,default="./Content/imgs/fcb.jpg")
     age      = models.IntegerField()
     def __str__(self):
