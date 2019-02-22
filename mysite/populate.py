@@ -14,9 +14,10 @@ def getDataFromCsv(path,entity):
                 for line in fd:
                         if(i != 0):
                                 elems = line.split(',')
-                                nameTrimed = elems[1].split('"')[1]
-                                kasiTrimed = elems[2].split('"')[1]
-                                team = Team.objects.get_or_create(name = nameTrimed,kasi = kasiTrimed)
+                                tournamentId    = int(elems[0].split('"')[1])
+                                nameTrimed      = elems[1].split('"')[1]
+                                kasiTrimed      = elems[2].split('"')[1]
+                                team = Team.objects.get_or_create(tournament = tournamentId,name = nameTrimed,kasi = kasiTrimed)
                                 List.append(Team(name = nameTrimed,kasi = kasiTrimed))
                         i = i + 1
         if (entity == 'Players'):
