@@ -29,6 +29,7 @@ class Fixture(models.Model):
     tournament      = models.ForeignKey(Tournament, on_delete=models.CASCADE,null=True,default=2040)
     homeTeam        = models.CharField(max_length=128)
     awayTeam        = models.CharField(max_length=128)
+    played          = models.CharField(max_length=128,default="no")
     date            = models.DateField()
     pitch           = models.CharField(max_length=128)
     stage           = models.CharField(max_length=64)

@@ -29,7 +29,23 @@ def getDataFromCsv(path,entity):
                         tournament = Tournament.objects.get_or_create(name = elems[1]
                         ,maxStages = elems[2],maxGames = elems[3],maxTeams = elems[4])
                         List.append(Tournament(name = elems[1]
-                        ,maxStages = elems[2],maxGames = elems[3],maxTeams = elems[4]))  
+                        ,maxStages = elems[2],maxGames = elems[3],maxTeams = elems[4]))
+        
+        if (entity == 'Fixture'):
+                for line in fd:
+                        elems = line.split(',')
+                        fixture = Fixture.objects.get_or_create(name = elems[1]
+                        ,homeTeam = elems[2],awayTeam = elems[3],pitch = elems[4])
+                        List.append(Fixture(name = elems[1]
+                        ,homeTeam = elems[2],awayTeam = elems[3],pitch = elems[4]))
+
+        if (entity == 'Result'):
+                for line in fd:
+                        elems = line.split(',')
+                        result = Result.objects.get_or_create(name = elems[1]
+                        ,homeGoals = elems[2],awayGoals = elems[3])
+                        List.append(Fixture(name = elems[1]
+                        ,homeTeam = elems[2],awayTeam = elems[3],pitch = elems[4]))  
 
         return List                
 
