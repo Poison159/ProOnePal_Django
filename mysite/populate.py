@@ -8,49 +8,59 @@ from SiyApp.models import Team,Player,Tournament,Fixture,Result
 def getDataFromCsv(path,entity):
         path = path + "\\dbo." + entity + ".csv"
         fd = open(path)
+        i = 0
         List = []
         if (entity == 'Teams'):
                 for line in fd:
                         elems = line.split(',')
+                        elems = elems.pop(0)
                         team = Team.objects.get_or_create(name = elems[1],
                         kasi = elems[2])
                         List.append(Team(name = elems[1],
                         kasi = elems[2]))
-        if (entity == 'Player'):
+        if (entity == 'Players'):
                 for line in fd:
                         elems = line.split(',')
+                        elems = elems.pop(0)
                         player = Player.objects.get_or_create(name = elems[1],
                         age = elems[2], position = elems[3])
                         List.append(Player(name = elems[1],
                         kasi = elems[2],position = elems[3]))
-        if (entity == 'Tournament'):
+        if (entity == 'Tournaments'):
                 for line in fd:
-                        elems = line.split(',')
-                        tournament = Tournament.objects.get_or_create(name = elems[1]
-                        ,maxStages = elems[2],maxGames = elems[3],maxTeams = elems[4])
-                        List.append(Tournament(name = elems[1]
-                        ,maxStages = elems[2],maxGames = elems[3],maxTeams = elems[4]))
+                        if(i != 0):
+                                elems           = line.split(',')
+                                maxGamesInt     = int(elems[1].split('"')[1])
+                                maxTeamsInt     = int(elems[2].split('"')[1])
+                                maxStagesInt    = int(elems[3].split('"')[1])
+                                nameTrimed      = elems[4].split('"')[1]
+                                tournament      = Tournament.objects.get_or_create(name = nameTrimed,maxStages = maxStagesInt,maxGames = maxGamesInt,maxTeams = maxTeamsInt)
+                                List.append(Tournament(name = nameTrimed,maxStages = maxStagesInt,maxGames = maxGamesInt,maxTeams = maxTeamsInt))
+                        i = i + 1
+                        
         
-        if (entity == 'Fixture'):
+        if (entity == 'Fixtures'):
                 for line in fd:
                         elems = line.split(',')
-                        fixture = Fixture.objects.get_or_create(name = elems[1]
-                        ,homeTeam = elems[2],awayTeam = elems[3],pitch = elems[4])
-                        List.append(Fixture(name = elems[1]
-                        ,homeTeam = elems[2],awayTeam = elems[3],pitch = elems[4]))
+                        elems = elems.pop(0)
+                        fixture = Fixture.objects.get_or_create(stage = elems[1],homeTeam = elems[2],
+                        awayTeam = elems[3],date = elems[4],pitch = elems[5])
+                        List.append(Fixture(stage = elems[1],homeTeam = elems[2],
+                        awayTeam = elems[3],date = elems[4],pitch = elems[5]))
 
-        if (entity == 'Result'):
+        if (entity == 'Results'):
                 for line in fd:
                         elems = line.split(',')
-                        result = Result.objects.get_or_create(name = elems[1]
-                        ,homeGoals = elems[2],awayGoals = elems[3])
-                        List.append(Fixture(name = elems[1]
-                        ,homeTeam = elems[2],awayTeam = elems[3],pitch = elems[4]))  
+                        elems = elems.pop(0)
+                        result = Result.objects.get_or_create(homeGoals = int(elems[1].strip('"')),awayGoals = int(elems[2]))
+                        List.append(Result(homeGoals = int(elems[1]),awayGoals = int(elems[2])))  
 
         return List                
 
 
 if __name__ == '__main__':
     print("Population Script Running")
-    getDataFromCsv("C:\\Users\\Siya\\Documents\\ProOnePalCSV","Teams")
+    enties = {"Teams","Players","Tournaments","Results","Fixtures"}
+    for entity in enties:
+                getDataFromCsv("C:\\Users\\Siya\\Documents\\ProOnePalCSV","Tournaments")
     print("Population Complete!!")
