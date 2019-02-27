@@ -10,15 +10,16 @@ def getDataFromCsv(path,entity):
         fd = open(path)
         i = 0
         List = []
+
         if (entity == 'Teams'):
                 for line in fd:
                         if(i != 0):
                                 elems = line.split(',')
-                                tournamentId    = int(elems[0].split('"')[1])
+                                tournament      = Tournament(name="Default",maxStages=5,maxTeams=16,maxGames=32)
                                 nameTrimed      = elems[1].split('"')[1]
                                 kasiTrimed      = elems[2].split('"')[1]
-                                team = Team.objects.get_or_create(tournament = tournamentId,name = nameTrimed,kasi = kasiTrimed)
                                 List.append(Team(name = nameTrimed,kasi = kasiTrimed))
+                                team = Team.objects.get_or_create(tournament = tournament,name = nameTrimed,kasi = kasiTrimed)
                         i = i + 1
         if (entity == 'Players'):
                 for line in fd:
@@ -36,17 +37,19 @@ def getDataFromCsv(path,entity):
                                 maxTeamsInt     = int(elems[2].split('"')[1])
                                 maxStagesInt    = int(elems[3].split('"')[1])
                                 nameTrimed      = elems[4].split('"')[1]
-                                tournament      = Tournament.objects.get_or_create(name = nameTrimed,maxStages = maxStagesInt,maxGames = maxGamesInt,maxTeams = maxTeamsInt)
                                 List.append(Tournament(name = nameTrimed,maxStages = maxStagesInt,maxGames = maxGamesInt,maxTeams = maxTeamsInt))
+                                tournament      = Tournament.objects.get_or_create(name = nameTrimed,maxStages = maxStagesInt,maxGames = maxGamesInt,maxTeams = maxTeamsInt)
+                                
                         i = i + 1
         if (entity == 'Fixtures'):
                 for line in fd:
                         if(i != 0):
                                 elems = line.split(',')
-                                fixture = Fixture.objects.get_or_create(stage = elems[1],homeTeam = elems[2],
-                                awayTeam = elems[3],date = elems[4],pitch = elems[5])
                                 List.append(Fixture(stage = elems[1],homeTeam = elems[2],
                                 awayTeam = elems[3],date = elems[4],pitch = elems[5]))
+                                fixture = Fixture.objects.get_or_create(stage = elems[1],homeTeam = elems[2],
+                                awayTeam = elems[3],date = elems[4],pitch = elems[5])
+                                
                         i = i + 1
         if (entity == 'Results'):
                 for line in fd:
@@ -54,8 +57,9 @@ def getDataFromCsv(path,entity):
                                 elems = line.split(',')
                                 homeGoalsInt = int(elems[1].split('"')[1])
                                 awayGoalsInt = int(elems[2].split('"')[1])
-                                result = Result.objects.get_or_create(homeGoals = homeGoalsInt,awayGoals = awayGoalsInt)
                                 List.append(Result(homeGoals = homeGoalsInt,awayGoals = awayGoalsInt))
+                                result = Result.objects.get_or_create(homeGoals = homeGoalsInt,awayGoals = awayGoalsInt)
+                                
                         i = i + 1
 
         return List                
